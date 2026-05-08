@@ -1,0 +1,110 @@
+---
+interface Step {
+  number: string;
+  label: string;
+  description: string;
+}
+
+interface Props {
+  steps?: Step[];
+}
+
+const {
+  steps = [
+    { number: '01', label: 'START', description: 'Enemy enters the screen.' },
+    { number: '02', label: 'IDENTIFY', description: 'Word appears above enemy.' },
+    { number: '03', label: 'ENGAGE', description: 'Type word to fire weapon.' },
+    { number: '04', label: 'DESTROY', description: 'Enemy is neutralized.' },
+    { number: '05', label: 'COMBO', description: 'Accuracy builds your streak.' },
+    { number: '06', label: 'RESULT', description: 'High scores and badges earned.' }
+  ]
+} = Astro.props;
+---
+
+<section class="core-loop" aria-labelledby="core-loop-title" data-reveal>
+  <div class="container">
+    <h2 id="core-loop-title" class="text-glow-magenta">CORE LOOP</h2>
+    <div class="divider" aria-hidden="true"></div>
+    <div class="steps">
+      {steps.map((step) => (
+        <article class="step-card">
+          <span>{step.number}</span>
+          <h3>{step.label}</h3>
+          <p>{step.description}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .core-loop {
+    padding: var(--spacing-section-sm) 0;
+  }
+
+  h2 {
+    color: var(--color-magenta);
+    font-size: clamp(1.8rem, 4vw, 2.25rem);
+    text-align: center;
+  }
+
+  .divider {
+    width: 80px;
+    height: 2px;
+    margin: 16px auto 46px;
+    background: var(--color-magenta);
+    box-shadow: 0 0 18px rgba(255, 0, 184, 0.8);
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+  }
+
+  .step-card {
+    border: 1px solid rgba(255, 0, 184, 0.3);
+    border-radius: 8px;
+    background: rgba(3, 6, 18, 0.62);
+    padding: 20px 14px;
+    text-align: center;
+    transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+  }
+
+  .step-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 0, 184, 0.82);
+    box-shadow: 0 0 22px rgba(255, 0, 184, 0.2);
+  }
+
+  span {
+    color: var(--color-magenta);
+    font-size: 2rem;
+    font-weight: 700;
+  }
+
+  h3 {
+    margin-top: 5px;
+    color: var(--color-cyan);
+    font-size: 0.66rem;
+    letter-spacing: 0.15em;
+  }
+
+  p {
+    margin-top: 9px;
+    font-size: 0.78rem;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 980px) {
+    .steps { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  @media (max-width: 520px) {
+    .steps {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .step-card { padding-inline: 10px; }
+  }
+</style>

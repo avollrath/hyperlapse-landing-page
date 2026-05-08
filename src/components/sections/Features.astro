@@ -1,0 +1,70 @@
+---
+import Card from '@/components/ui/Card.astro';
+
+interface Feature {
+  title: string;
+  body: string;
+  accent: 'magenta' | 'cyan';
+}
+
+interface Props {
+  features?: Feature[];
+}
+
+const {
+  features = [
+    { title: 'TYPING MEETS ACTION', accent: 'cyan', body: 'A hybrid genre where linguistic dexterity meets tactical positioning. Dodge until you spell.' },
+    { title: 'THREE DIFFICULTY MODES', accent: 'magenta', body: 'Beginner: 40px/s scroll speed\nChallenging: 190px/s scroll speed\nInsane: 400px/s scroll speed' },
+    { title: 'ACHIEVEMENTS & PROGRESSION', accent: 'cyan', body: 'Unlock over 25+ unique badges by hitting speed milestones and survival goals.' },
+    { title: 'SYNTHWAVE AESTHETIC', accent: 'magenta', body: '100% original electronic soundtrack paired with neon-drenched pixel art landscapes.' },
+    { title: 'PLAY ANY WAY', accent: 'cyan', body: 'Jump in instantly as a Guest or create an Account to sync progress and climb the boards.' },
+    { title: 'BOSS ENCOUNTERS', accent: 'magenta', body: 'Face macro-sentinels requiring complex typing patterns under intense fire-rates.' }
+  ]
+} = Astro.props;
+---
+
+<section class="features" id="features" aria-label="HyperType features" data-reveal>
+  <div class="container">
+    <p class="section-kicker">// FEATURES</p>
+    <div class="feature-grid">
+      {features.map((feature) => (
+        <Card title={feature.title} accent={feature.accent}>
+          {feature.body.split('\n').map((line) => <p>{line}</p>)}
+        </Card>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .features {
+    padding: var(--spacing-section-sm) 0;
+    background: rgba(3, 4, 10, 0.44);
+  }
+
+  .section-kicker {
+    margin-bottom: 22px;
+    color: var(--color-cyan);
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-align: center;
+  }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  p + p {
+    margin-top: 5px;
+  }
+
+  @media (max-width: 980px) {
+    .feature-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 560px) {
+    .feature-grid { grid-template-columns: 1fr; }
+  }
+</style>
