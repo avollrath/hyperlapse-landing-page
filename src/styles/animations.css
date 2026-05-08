@@ -1,0 +1,51 @@
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
+  75% { opacity: 0.95; }
+  92% { opacity: 0.88; }
+}
+
+@keyframes pulse-glow-magenta {
+  0%, 100% { box-shadow: 0 0 28px rgba(255, 0, 184, 0.32), 0 0 90px rgba(0, 208, 255, 0.1); }
+  50% { box-shadow: 0 0 42px rgba(255, 0, 184, 0.48), 0 0 120px rgba(0, 208, 255, 0.16); }
+}
+
+@keyframes pulse-glow-cyan {
+  0%, 100% { box-shadow: 0 0 20px rgba(0, 208, 255, 0.4); }
+  50% { box-shadow: 0 0 40px rgba(0, 208, 255, 0.8), 0 0 80px rgba(0, 208, 255, 0.2); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes neon-border-pulse {
+  0%, 100% { border-color: rgba(255, 0, 184, 0.95); }
+  50% { border-color: rgba(255, 0, 184, 0.4); }
+}
+
+@keyframes reveal-fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes grid-move {
+  from { background-position: 0 0; }
+  to { background-position: 0 60px; }
+}
