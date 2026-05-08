@@ -1,0 +1,40 @@
+---
+interface Props {
+  label: string;
+  unlocked?: boolean;
+}
+
+const { label, unlocked = false } = Astro.props;
+---
+
+<span class:list={['badge-tile', unlocked && 'unlocked']} aria-label={`${label} badge ${unlocked ? 'unlocked' : 'locked'}`}>
+  {label}
+</span>
+
+<style>
+  .badge-tile {
+    display: grid;
+    width: 48px;
+    height: 48px;
+    place-items: center;
+    border: 1px solid rgba(255, 0, 184, 0.28);
+    border-radius: 8px;
+    background: rgba(3, 6, 18, 0.82);
+    color: rgba(170, 180, 214, 0.55);
+    font-size: 0.68rem;
+    transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, color 180ms ease;
+  }
+
+  .badge-tile.unlocked {
+    border-color: rgba(255, 0, 184, 0.82);
+    color: var(--color-magenta);
+    box-shadow: 0 0 18px rgba(255, 0, 184, 0.25);
+  }
+
+  .badge-tile:hover {
+    transform: scale(1.1);
+    border-color: var(--color-cyan);
+    color: var(--color-cyan);
+    box-shadow: 0 0 18px rgba(0, 214, 255, 0.28);
+  }
+</style>

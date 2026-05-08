@@ -1,0 +1,93 @@
+---
+import '@fontsource/jetbrains-mono/400.css';
+import '@fontsource/jetbrains-mono/700.css';
+import '@/styles/global.css';
+import '@/styles/animations.css';
+import gameplayOg from '@/assets/images/gameplay-screenshot.webp';
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+}
+
+const { title, description, ogImage = gameplayOg.src } = Astro.props;
+const canonicalUrl = 'https://avollrath.github.io/HyperType/';
+const absoluteImage = ogImage.startsWith('http') ? ogImage : new URL(ogImage, 'https://avollrath.github.io').toString();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content="HyperType: Type to Survive" />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={absoluteImage} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="HyperType: Type to Survive" />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={absoluteImage} />
+    <meta name="theme-color" content="#05070d" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <slot />
+    <div class="crt-overlay" aria-hidden="true"></div>
+    <script>
+      const revealTargets = document.querySelectorAll('[data-reveal]');
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('revealed');
+            revealObserver.unobserve(entry.target);
+          });
+        },
+        { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+      );
+      revealTargets.forEach((target) => revealObserver.observe(target));
+
+      const header = document.querySelector('[data-site-header]');
+      const setHeaderState = () => {
+        header?.classList.toggle('scrolled', window.scrollY > 80);
+      };
+      setHeaderState();
+      window.addEventListener('scroll', setHeaderState, { passive: true });
+
+      const statSection = document.querySelector('[data-stat-section]');
+      if (statSection) {
+        const counters = statSection.querySelectorAll('[data-counter]');
+        const easeOutQuart = (value) => 1 - Math.pow(1 - value, 4);
+        const statObserver = new IntersectionObserver(
+          ([entry]) => {
+            if (!entry?.isIntersecting) return;
+            counters.forEach((counter) => {
+              const target = Number(counter.dataset.target ?? '0');
+              const suffix = counter.dataset.suffix ?? '';
+              const duration = 1500;
+              const startedAt = performance.now();
+              const render = (now) => {
+                const progress = Math.min((now - startedAt) / duration, 1);
+                counter.textContent = `${Math.round(easeOutQuart(progress) * target)}${suffix}`;
+                if (progress < 1) requestAnimationFrame(render);
+              };
+              requestAnimationFrame(render);
+            });
+            statObserver.disconnect();
+          },
+          { threshold: 0.35 }
+        );
+        statObserver.observe(statSection);
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,62 @@
+---
+import clsx from 'clsx';
+
+interface Props {
+  title: string;
+  accent?: 'magenta' | 'cyan';
+  class?: string;
+}
+
+const { title, accent = 'cyan', class: className } = Astro.props;
+---
+
+<article class={clsx('feature-card', `feature-card-${accent}`, className)}>
+  <h3>{title}</h3>
+  <div class="feature-card-body">
+    <slot />
+  </div>
+</article>
+
+<style>
+  .feature-card {
+    min-height: 214px;
+    border: 2px solid var(--color-panel-border-cyan);
+    border-radius: var(--border-radius-card);
+    background: var(--color-panel);
+    padding: 28px 24px;
+    transition: transform 250ms ease, box-shadow 250ms ease, border-color 250ms ease;
+  }
+
+  .feature-card-magenta {
+    border-color: var(--color-panel-border-magenta);
+  }
+
+  .feature-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--color-cyan);
+    box-shadow: 0 0 34px rgba(0, 214, 255, 0.28);
+  }
+
+  .feature-card-magenta:hover {
+    border-color: var(--color-magenta);
+    box-shadow: 0 0 34px rgba(255, 0, 184, 0.28);
+  }
+
+  h3 {
+    color: var(--color-cyan);
+    font-size: 1.05rem;
+    line-height: 1.35;
+    letter-spacing: 0.08em;
+  }
+
+  .feature-card-magenta h3 {
+    color: var(--color-magenta);
+  }
+
+  .feature-card-body {
+    margin-top: 14px;
+    color: var(--color-muted);
+    font-size: 0.88rem;
+    line-height: 1.62;
+  }
+</style>

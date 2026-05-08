@@ -1,0 +1,14 @@
+---
+import clsx from 'clsx';
+
+interface Props {
+  accent?: 'magenta' | 'cyan';
+  class?: string;
+}
+
+const { accent = 'magenta', class: className } = Astro.props;
+---
+
+<div class={clsx('neon-panel', accent === 'cyan' && 'neon-panel-cyan', className)}>
+  <slot />
+</div>

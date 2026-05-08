@@ -1,0 +1,21 @@
+---
+import clsx from 'clsx';
+
+interface Props {
+  href: string;
+  label: string;
+  variant?: 'primary' | 'outline';
+  class?: string;
+  ariaLabel?: string;
+}
+
+const { href, label, variant = 'primary', class: className, ariaLabel = label } = Astro.props;
+---
+
+<a
+  class={clsx('btn', variant === 'primary' ? 'btn-primary' : 'btn-outline', className)}
+  href={href}
+  aria-label={ariaLabel}
+>
+  <slot>{label}</slot>
+</a>
