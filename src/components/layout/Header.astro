@@ -1,0 +1,156 @@
+---
+import Button from '@/components/ui/Button.astro';
+
+interface NavLink {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  links?: NavLink[];
+  gameUrl?: string;
+}
+
+const {
+  links = [
+    { label: 'Play', href: '#play' },
+    { label: 'Features', href: '#features' },
+    { label: 'About', href: '#about' },
+    { label: 'Leaderboards', href: 'https://avollrath.github.io/HyperType/' }
+  ],
+  gameUrl = 'https://avollrath.github.io/HyperType/'
+} = Astro.props;
+---
+
+<header class="site-header" data-site-header>
+  <nav class="nav-shell" aria-label="Primary navigation">
+    <a class="wordmark text-glow-magenta" href="#main-content" aria-label="HyperType home">HYPERTYPE</a>
+    <input class="nav-toggle" id="nav-toggle" type="checkbox" aria-label="Open navigation menu" />
+    <label class="nav-burger" for="nav-toggle" aria-hidden="true"><span></span><span></span><span></span></label>
+    <div class="nav-links">
+      {links.map((link) => <a href={link.href}>{link.label}</a>)}
+    </div>
+    <Button href={gameUrl} label="PLAY NOW" class="nav-cta" />
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 0, 184, 0.2);
+    background: rgba(3, 4, 10, 0.72);
+    backdrop-filter: blur(12px);
+    transition: background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+  }
+
+  .site-header.scrolled {
+    border-color: rgba(255, 0, 184, 0.42);
+    background: rgba(3, 4, 10, 0.96);
+    box-shadow: 0 0 28px rgba(255, 0, 184, 0.12);
+  }
+
+  .nav-shell {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 28px;
+    width: min(calc(100% - 32px), 1180px);
+    min-height: 58px;
+    margin-inline: auto;
+  }
+
+  .wordmark {
+    color: var(--color-magenta);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+
+  .nav-links {
+    display: flex;
+    justify-content: center;
+    gap: clamp(18px, 4vw, 42px);
+  }
+
+  .nav-links a {
+    border-bottom: 2px solid transparent;
+    color: var(--color-muted);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    padding: 21px 0 18px;
+    text-transform: uppercase;
+    transition: color 150ms ease, border-color 150ms ease, text-shadow 150ms ease;
+  }
+
+  .nav-links a:hover {
+    border-color: var(--color-magenta);
+    color: var(--color-magenta);
+    text-shadow: 0 0 16px rgba(255, 0, 184, 0.7);
+  }
+
+  .nav-cta {
+    min-height: 34px;
+    padding: 9px 20px;
+    font-size: 0.68rem;
+  }
+
+  .nav-toggle,
+  .nav-burger {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    .nav-shell {
+      grid-template-columns: auto auto 1fr;
+      gap: 16px;
+      min-height: 62px;
+    }
+
+    .nav-toggle {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .nav-burger {
+      display: grid;
+      gap: 5px;
+      width: 38px;
+      cursor: pointer;
+    }
+
+    .nav-burger span {
+      display: block;
+      height: 2px;
+      background: var(--color-cyan);
+      box-shadow: 0 0 12px rgba(0, 214, 255, 0.7);
+    }
+
+    .nav-links {
+      position: absolute;
+      top: 62px;
+      right: 16px;
+      left: 16px;
+      display: none;
+      border: 1px solid rgba(255, 0, 184, 0.48);
+      background: rgba(3, 4, 10, 0.98);
+      padding: 12px 18px;
+    }
+
+    .nav-links a {
+      display: block;
+      padding: 14px 0;
+    }
+
+    .nav-toggle:checked ~ .nav-links {
+      display: block;
+    }
+
+    .nav-cta {
+      justify-self: end;
+      width: auto;
+      padding-inline: 16px;
+    }
+  }
+</style>
