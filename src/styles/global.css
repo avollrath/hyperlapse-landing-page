@@ -151,7 +151,7 @@ button:focus-visible {
   bottom: -26%;
   left: 50%;
   width: 220%;
-  height: 170%;
+  height: 200%;
   transform: translateX(-50%) perspective(400px) rotateX(48deg);
   transform-origin: bottom center;
   background-image:
@@ -159,7 +159,7 @@ button:focus-visible {
     linear-gradient(90deg, rgba(0, 214, 255, 0.3) 1px, transparent 1px);
   background-size: 60px 60px;
   animation: grid-move 2s linear infinite;
-  filter: drop-shadow(0 0 10px rgba(0, 214, 255, 0.65));
+  box-shadow: 0 0 40px rgba(0, 214, 255, 0.4);
 }
 
 .crt-overlay {
